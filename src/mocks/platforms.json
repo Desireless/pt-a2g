@@ -1,0 +1,27 @@
+{
+    "pageNumber": 5,
+    "pageSize": 10,
+    "firstPage": "https://localhost:7201/api/Platforms?pageNumber=1&pageSize=10&fleet=Flota%201",
+    "lastPage": "https://localhost:7201/api/Platforms?pageNumber=5&pageSize=10&fleet=Flota%201",
+    "totalPages": 5,
+    "totalRecords": 42,
+    "nextPage": null,
+    "previousPage": "https://localhost:7201/api/Platforms?pageNumber=4&pageSize=10&fleet=Flota%201",
+    "data": [
+        {
+            "id": "36ad6d85-a3a1-484c-a57a-06442c7da757",
+            "name": "Plataforma 285",
+            "img": "https://a2gclientdata.s3.us-west-2.amazonaws.com/a2g/sensor6.png",
+            "fleet": "Flota 1"
+        },
+        {
+            "id": "314457fb-98c3-4e16-a27a-db2dbac13f7c",
+            "name": "Plataforma 287",
+            "img": "https://a2gclientdata.s3.us-west-2.amazonaws.com/a2g/sensor7.png",
+            "fleet": "Flota 1"
+        }
+    ],
+    "succeeded": true,
+    "errors": null,
+    "message": null
+}
