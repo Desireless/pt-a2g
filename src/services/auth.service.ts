@@ -1,7 +1,8 @@
 import { UserInfo } from "../models/models";
 import { getLocalStorage, setLocalStorage } from "../utils/localstorage.utility";
+import { getMinutesDifferenceFromNow } from "../utils/time.utility";
 
-
+const MAX_TOKEN_DURATION = 180;
 interface SignInResponse {
     ok: boolean;
     error?: string | null;
@@ -52,6 +53,16 @@ class AuthService {
         const name = getLocalStorage('name') as string;
         const ts = getLocalStorage('ts') as string;
         return {token, email, name, ts};
+    }
+
+    isValidToken(): boolean {
+        const token = getLocalStorage('token');
+        if (token === null) return false;
+
+        const timestamp: string | null = getLocalStorage('ts')
+        if (timestamp !== null && getMinutesDifferenceFromNow(timestamp) > MAX_TOKEN_DURATION) return false;
+
+        return true;
     }
 }
 
