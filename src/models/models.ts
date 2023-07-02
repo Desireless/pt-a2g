@@ -12,6 +12,21 @@ export interface Platform {
     fleet: string;
 }
 
+export interface PlatformInfo {
+    id: string;
+    name: string;
+    fleet: string;
+    img: string;
+    lastReport: string;
+    sensors: Sensor[];
+}
+
+export interface Sensor {
+    id: string;
+    name: string;
+    type: string;
+}
+
 export interface PlatformApiResponse {
     pageNumber: number;
     pageSize: number;

@@ -1,0 +1,44 @@
+{
+    "data": {
+      "id": "eff01b4e-1315-41a6-8846-9f4cb7bfc13f",
+      "name": "Plataforma 290",
+      "fleet": "Flota 6",
+      "img": "https://a2gclientdata.s3.us-west-2.amazonaws.com/a2g/sensor9.png",
+      "lastReport": "https://a2gclientdata.s3.us-west-2.amazonaws.com/a2g/to_render.html",
+      "sensors": [
+        {
+          "id": "4213e469-5021-447f-af6a-8adbbeeae4f9",
+          "name": "Sensor 0",
+          "type": "Tipo 3"
+        },
+        {
+          "id": "57422cf0-6bc6-438a-97be-1578ef17008c",
+          "name": "Sensor 1",
+          "type": "Tipo 1"
+        },
+        {
+          "id": "0f5310fd-2ab7-4e35-92d1-5072ee634fdd",
+          "name": "Sensor 2",
+          "type": "Tipo 3"
+        },
+        {
+          "id": "e151deb3-25a5-428a-9af4-b676b17bf4f0",
+          "name": "Sensor 3",
+          "type": "Tipo 2"
+        },
+        {
+          "id": "5b05e2d5-2e48-490b-bc77-e130dec0b6de",
+          "name": "Sensor 4",
+          "type": "Tipo 2"
+        },
+        {
+          "id": "dbf3d976-4814-406d-8ee0-8cbcd9fd83ad",
+          "name": "Sensor 5",
+          "type": "Tipo 2"
+        }
+      ]
+    },
+    "succeeded": true,
+    "errors": null,
+    "message": null
+  }

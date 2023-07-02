@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 //import data from '../../mocks/platforms.json'
 import { Platform } from '../../models/models';
 import platformService from '../../services/platform.service';
 import { getUrlParams } from '../../utils/url.utillity';
 import { useNavigate } from 'react-router-dom';
 import authService from '../../services/auth.service';
+import PlatformDetails from './components/PlatformDetails';
 
 
 function Dashboard() {
@@ -14,6 +15,8 @@ function Dashboard() {
   const [data, setData] = useState<Platform[] | null>([]);
   const [loading, setLoading] = useState(false);
   //const [error, setError] = useState(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [selectedPlatformId, setSelectedPlatformId] = useState<string>('');
 
   // datos iniciales
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -27,6 +30,7 @@ function Dashboard() {
   const [firstPage, setFirstPage] = useState<string | null>(null);
   const [lastPage, setLastPage] = useState<string | null>(null);
 
+  const availableFleets = ['Flota 1', 'Flota 2', 'Flota 3', 'Flota 4', 'Flota 5', 'Flota 6'];
 
   useEffect(() => {
     if(authService.isValidToken() === false){
@@ -56,23 +60,33 @@ function Dashboard() {
       if(response.error === "token_expired"){
         navigate("/", { replace: true });
       }
+
+      if(response.error === "platform" || response.error === "request"){
+        console.log("Error trying to get platforms")
+      }
     }
 
     setLoading(false);
 
   }
 
+  const handleFleetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newFleet = event.target.value;
+    setFleet(newFleet);
+    fetchPlatformData(pageNumber, pageSize, newFleet);
+  }
+
   const handleNextPage = () => {
     if (nextPage) {
-      setPageNumber(pageNumber + 1);
-      //fetchPLaformData();
+      const { pageNumber: newPageNumber, pageSize: newPageSize, fleet: newFleet } = getUrlParams(nextPage);
+      fetchPlatformData(newPageNumber, newPageSize, newFleet);
     }
   }
 
   const handlePreviousPage = () => {
     if (previousPage) {
-      setPageNumber(pageNumber + 1);
-      //fetchPLaformData();
+      const { pageNumber: newPageNumber, pageSize: newPageSize, fleet: newFleet } = getUrlParams(previousPage);
+      fetchPlatformData(newPageNumber, newPageSize, newFleet);
     }
   }
 
@@ -90,9 +104,23 @@ function Dashboard() {
     }
   }
 
+  const openModal = (platformId: string) => {
+    setSelectedPlatformId(platformId);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <>
       <h1>Platforms</h1>
+      <div>
+      {modalOpen && <PlatformDetails id={selectedPlatformId} onClose={closeModal} />}
+
+      </div>
+
       <table className='styled-table'>
         <thead>
           <tr>
@@ -102,13 +130,16 @@ function Dashboard() {
         </thead>
         <tbody>
           {data?.map((platform) => (
-            <tr key={platform.id}>
+            <tr key={platform.id} onClick={() => openModal(platform.id)}>
               <td>{platform.name}</td>
               <td>{platform.id}</td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      
+
       <div className='table-buttons'>
         <button onClick={handlePreviousPage} disabled={!previousPage}> Previous Page</button>
         <button onClick={handleNextPage} disabled={!nextPage}> Next Page</button>
@@ -121,6 +152,16 @@ function Dashboard() {
         <span> - </span>
         <span onClick={handleLastPage} className='clickable'>last page</span>
       </div>
+      <div>
+        <span>Select Fleet: </span>
+        <select id='fleet-select' value={fleet} onChange={handleFleetChange} title='fleet'> 
+            {availableFleets.map((fleet) => (
+              <option key={fleet} value={fleet}>{fleet}</option>
+            )
+            )}
+        </select>
+      </div>
+      
     </>
   )
 }
